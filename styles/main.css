@@ -43,8 +43,10 @@
 .startGame .startGameContainer .buttonsContainer button.idle {
   background-color: #BCCED9;
 }
-.startGame .startGameContainer .buttonsContainer button.idle:hover {
-  background-color: #6395B8;
+@media (min-width: 1024px) {
+  .startGame .startGameContainer .buttonsContainer button.idle:hover {
+    background-color: #6395B8;
+  }
 }
 .startGame .startGameContainer .playersNumbers .buttonsContainer {
   grid-template-columns: repeat(4, 1fr);
@@ -68,8 +70,10 @@
   padding: 14px 0px;
   font-size: 18px;
 }
-.startGame .startGameContainer div:last-child button.primary:hover {
-  background-color: #FFB84A;
+@media (min-width: 1024px) {
+  .startGame .startGameContainer div:last-child button.primary:hover {
+    background-color: #FFB84A;
+  }
 }
 @media (min-width: 768px) {
   .startGame .startGameContainer div:last-child button.primary {
@@ -133,8 +137,10 @@
     top: calc(50% - 20px);
   }
 }
-.gameBoard .grid-4x4 .choice:hover {
-  background-color: #6395B8;
+@media (min-width: 1024px) {
+  .gameBoard .grid-4x4 .choice:hover {
+    background-color: #6395B8;
+  }
 }
 .gameBoard .grid-4x4 .choice.selected {
   background-color: #FDA214;
@@ -208,8 +214,10 @@
     top: calc(50% - 20px);
   }
 }
-.gameBoard .grid-6x6 .choice:hover {
-  background-color: #6395B8;
+@media (min-width: 1024px) {
+  .gameBoard .grid-6x6 .choice:hover {
+    background-color: #6395B8;
+  }
 }
 .gameBoard .grid-6x6 .choice.selected {
   background-color: #FDA214;
@@ -271,16 +279,20 @@
   color: #FCFCFC;
   background-color: #FDA214;
 }
-.gameBoard .gameBoardHeader .gameOptions .primary:hover {
-  background-color: #FFB84A;
+@media (min-width: 1024px) {
+  .gameBoard .gameBoardHeader .gameOptions .primary:hover {
+    background-color: #FFB84A;
+  }
 }
 .gameBoard .gameBoardHeader .gameOptions .secondary {
   color: #304859;
   background-color: #DFE7EC;
 }
-.gameBoard .gameBoardHeader .gameOptions .secondary:hover {
-  background-color: #6395B8;
-  color: #FCFCFC;
+@media (min-width: 1024px) {
+  .gameBoard .gameBoardHeader .gameOptions .secondary:hover {
+    background-color: #6395B8;
+    color: #FCFCFC;
+  }
 }
 @media (min-width: 768px) {
   .gameBoard .gameBoardHeader .gameOptions button:nth-child(1), .gameBoard .gameBoardHeader .gameOptions button:nth-child(2) {
@@ -589,14 +601,18 @@ button.active {
   background-color: #FDA214;
   color: #FCFCFC;
 }
-.modal .modal-body button.primary:hover {
-  background-color: #FFB84A;
+@media (min-width: 1024px) {
+  .modal .modal-body button.primary:hover {
+    background-color: #FFB84A;
+  }
 }
 .modal .modal-body button.secondary {
   background-color: #DFE7EC;
   color: #304859;
 }
-.modal .modal-body button.secondary:hover {
-  background-color: #6395B8;
-  color: #FCFCFC;
+@media (min-width: 1024px) {
+  .modal .modal-body button.secondary:hover {
+    background-color: #6395B8;
+    color: #FCFCFC;
+  }
 }/*# sourceMappingURL=main.css.map */

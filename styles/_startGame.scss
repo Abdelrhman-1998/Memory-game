@@ -32,8 +32,11 @@
                     background-color: $menuActive;
                 }
                 &.idle{
-                    &:hover{
-                        background-color: $menuHover;
+                    @media(min-width:$desktop){
+                        &:hover{
+                            background-color: $menuHover;
+                        }
+
                     }
                     background-color:$menuIdle;
                 }
@@ -60,8 +63,11 @@
         div:last-child{
             button.primary{
                 background-color: $buttonPrimaryIdle;
-                &:hover{
-                    background-color: $buttonPrimaryHover;
+                @media(min-width:$desktop){
+
+                    &:hover{
+                        background-color: $buttonPrimaryHover;
+                    }
                 }
                 padding: 14px 0px;
                 font-size: 18px;

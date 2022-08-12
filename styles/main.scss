@@ -56,16 +56,22 @@ button{
             &.primary{
                 background-color: $buttonPrimaryIdle;
                 color: $gameBoardBackground;
-                &:hover{
-                    background-color: $buttonPrimaryHover;
+                @media(min-width:$desktop){
+
+                    &:hover{
+                        background-color: $buttonPrimaryHover;
+                    }
                 }
             }
             &.secondary{
                 background-color: $buttonSecondaryColor;
                 color: $menuActive;
-                &:hover{
-                    background-color: $buttonSecondaryHover;
-                    color:$gameBoardBackground;
+                @media(min-width:$desktop){
+                    &:hover{
+                        background-color: $buttonSecondaryHover;
+                        color:$gameBoardBackground;
+                    }
+
                 }
             }
         }

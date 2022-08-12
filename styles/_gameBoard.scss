@@ -40,9 +40,11 @@ $dimensions:4,6; // grid dimension
            
                 }
     
-    
-                &:hover{
-                    background-color: $menuHover;
+                @media(min-width:$desktop){
+                    
+                    &:hover{
+                        background-color: $menuHover;
+                    }
                 }
 
                 &.selected{
@@ -160,16 +162,22 @@ $dimensions:4,6; // grid dimension
             .primary{
                 color: $gameBoardBackground;
                 background-color:$buttonPrimaryIdle;
-                &:hover{
-                    background-color:$buttonPrimaryHover;
+                @media(min-width:$desktop){
+
+                    &:hover{
+                        background-color:$buttonPrimaryHover;
+                    }
                 }
             }
             .secondary{
                 color:$menuActive;
                 background-color:$buttonSecondaryColor;
-                &:hover{
-                    background-color:$buttonSecondaryHover;
-                    color:$gameBoardBackground;
+                @media(min-width:$desktop){
+                    &:hover{
+                        background-color:$buttonSecondaryHover;
+                        color:$gameBoardBackground;
+                    }
+
                 }
             }
             @media(min-width:$tablet){
