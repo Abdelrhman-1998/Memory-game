@@ -237,6 +237,7 @@ submitDashboard.addEventListener("click",()=>{
                                     gameScore.querySelector(".turn")!.classList.remove("turn");
                                     gameScore.children[0].children[nextTurn-1].classList.add("turn");
                                 }
+                         
                             })
                         },800)
                        
@@ -532,6 +533,8 @@ function newGame(){
     }
     
     dashboardSelections={"theme":"numbers","playerNumbers":1,"gridSize":4};
+    gridContainer.classList.remove("grid-6x6");
+    gridContainer.classList.remove("grid-4x4");
     document.querySelectorAll(".choice").forEach((ele)=>{
         ele.remove()
     })

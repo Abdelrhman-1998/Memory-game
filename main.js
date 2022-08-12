@@ -433,6 +433,8 @@ function newGame() {
         gameScore.children[0].innerHTML = soloModeHTMLTags;
     }
     dashboardSelections = { "theme": "numbers", "playerNumbers": 1, "gridSize": 4 };
+    gridContainer.classList.remove("grid-6x6");
+    gridContainer.classList.remove("grid-4x4");
     document.querySelectorAll(".choice").forEach(function (ele) {
         ele.remove();
     });

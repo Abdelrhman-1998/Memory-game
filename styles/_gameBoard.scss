@@ -44,6 +44,7 @@ $dimensions:4,6; // grid dimension
                 &:hover{
                     background-color: $menuHover;
                 }
+
                 &.selected{
                    background-color:$buttonPrimaryIdle;
                    pointer-events: none;
