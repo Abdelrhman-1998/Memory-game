@@ -423,6 +423,7 @@ function restart() {
     closePopUps({ "buttonElement": restartGameStatusBtn, "parentElement": gameStatusModal }, { "buttonElement": restartMenuList, "parentElement": menuList });
 }
 function newGame() {
+    closePopUps({ "buttonElement": newGameGameStatus, "parentElement": gameStatusModal }, { "buttonElement": newGameMenuList, "parentElement": menuList });
     restart();
     if (dashboardSelections.playerNumbers === 1) {
         clearInterval(intervalId);
@@ -447,7 +448,6 @@ function newGame() {
     document.body.style.backgroundColor = "#152938";
     gameBoard.classList.add("d-none");
     dashboardMenu.classList.remove("d-none");
-    closePopUps({ "buttonElement": newGameGameStatus, "parentElement": gameStatusModal }, { "buttonElement": newGameMenuList, "parentElement": menuList });
 }
 function closePopUps() {
     var buttons = [];
