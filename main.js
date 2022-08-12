@@ -197,14 +197,22 @@ restartButtons.forEach(function (ele) {
 newGameButtons.forEach(function (ele) {
     ele.addEventListener("click", newGame);
 });
-// restartMenuList.addEventListener("click",()=>{
-//     menuList.classList.remove("d-block");
-//     menuList.classList.add("d-none");
-// })
-// restartGameStatusBtn.addEventListener("click",()=>{
-//     gameStatusModal.classList.remove("d-block","show");
-//     gameStatusModal.classList.add("d-none");
-// })
+restartMenuList.addEventListener("click", function () {
+    menuList.classList.remove("d-block");
+    menuList.classList.add("d-none");
+});
+restartGameStatusBtn.addEventListener("click", function () {
+    gameStatusModal.classList.remove("d-block", "show");
+    gameStatusModal.classList.add("d-none");
+});
+newGameMenuList.addEventListener("click", function () {
+    menuList.classList.remove("d-block", "show");
+    menuList.classList.add("d-none");
+});
+newGameGameStatus.addEventListener("click", function () {
+    gameStatusModal.classList.remove("d-block", "show");
+    gameStatusModal.classList.add("d-none");
+});
 function setGridSystem(gridContainer, dashboardSelections) {
     gridContainer.classList.add(dashboardSelections.theme, "grid-".concat(dashboardSelections.gridSize, "x").concat(dashboardSelections.gridSize));
     for (var i = 0; i < dashboardSelections.gridSize * dashboardSelections.gridSize; ++i) {
@@ -420,11 +428,37 @@ function restart() {
             ele.textContent = "0";
         });
     }
-    closePopUps({ "buttonElement": restartGameStatusBtn, "parentElement": gameStatusModal }, { "buttonElement": restartMenuList, "parentElement": menuList });
 }
 function newGame() {
-    closePopUps({ "buttonElement": newGameGameStatus, "parentElement": gameStatusModal }, { "buttonElement": newGameMenuList, "parentElement": menuList });
-    restart();
+    selectedPairs = [];
+    movesToSloveGame = 0;
+    playerScores = [0, 0, 0, 0];
+    nextTurn = 1;
+    singleSecondsCounter = 0;
+    tensSecondsCounter = 0;
+    minutesCounter = 0;
+    if (dashboardSelections.playerNumbers === 1) {
+        resetTimer();
+        clearInterval(intervalId);
+        gameScore.querySelector(".moves p:nth-child(2)").textContent = "0";
+    }
+    else {
+        var playersScore = gameScore.querySelectorAll("p:nth-child(2)");
+        var players = document.querySelectorAll(".multi >div");
+        players.forEach(function (ele, index) {
+            if (index === 0) {
+                if (!ele.classList.toString().includes("turn")) {
+                    ele.classList.add("turn");
+                }
+            }
+            else {
+                ele.classList.remove("turn");
+            }
+        });
+        playersScore.forEach(function (ele) {
+            ele.textContent = "0";
+        });
+    }
     if (dashboardSelections.playerNumbers === 1) {
         clearInterval(intervalId);
     }
@@ -448,17 +482,5 @@ function newGame() {
     document.body.style.backgroundColor = "#152938";
     gameBoard.classList.add("d-none");
     dashboardMenu.classList.remove("d-none");
-}
-function closePopUps() {
-    var buttons = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        buttons[_i] = arguments[_i];
-    }
-    buttons.forEach(function (ele) {
-        ele.buttonElement.addEventListener("click", function () {
-            ele.parentElement.classList.remove("d-block");
-            ele.parentElement.classList.add("d-none");
-        });
-    });
 }
 // setRandomPositions(dashboardSelections);

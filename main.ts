@@ -271,15 +271,23 @@ restartButtons.forEach((ele)=>{
 newGameButtons.forEach((ele)=>{
     ele.addEventListener("click",newGame)
 })
-// restartMenuList.addEventListener("click",()=>{
-//     menuList.classList.remove("d-block");
-//     menuList.classList.add("d-none");
-// })
-// restartGameStatusBtn.addEventListener("click",()=>{
-//     gameStatusModal.classList.remove("d-block","show");
-//     gameStatusModal.classList.add("d-none");
-// })
-
+restartMenuList.addEventListener("click",()=>{
+    menuList.classList.remove("d-block");
+    menuList.classList.add("d-none");
+})
+restartGameStatusBtn.addEventListener("click",()=>{
+    gameStatusModal.classList.remove("d-block","show");
+    gameStatusModal.classList.add("d-none");
+})
+newGameMenuList.addEventListener("click",()=>{
+    menuList.classList.remove("d-block","show");
+    menuList.classList.add("d-none");
+})
+newGameGameStatus.addEventListener("click",()=>{
+    gameStatusModal.classList.remove("d-block","show");
+    gameStatusModal.classList.add("d-none");
+    
+})
 function setGridSystem(gridContainer:Element,dashboardSelections:dashBoardType){
     gridContainer.classList.add(dashboardSelections.theme,`grid-${dashboardSelections.gridSize}x${dashboardSelections.gridSize}`);
     for(let i=0;i<dashboardSelections.gridSize*dashboardSelections.gridSize;++i){
@@ -493,6 +501,8 @@ function restart(){
     })
     fillGridSystem(dashboardSelections);
 
+    
+
     if(dashboardSelections.playerNumbers===1){
         resetTimer();
         clearInterval(intervalId);
@@ -516,15 +526,41 @@ function restart(){
             ele.textContent="0";
        }) 
     }
-    closePopUps(
-        {"buttonElement":restartGameStatusBtn,"parentElement":gameStatusModal},
-        {"buttonElement":restartMenuList,"parentElement":menuList})
+
 }
-function newGame(){ 
-    closePopUps(
-        {"buttonElement":newGameGameStatus,"parentElement":gameStatusModal},
-        {"buttonElement":newGameMenuList,"parentElement":menuList})
-    restart();
+
+function newGame(){
+
+    selectedPairs=[];  
+    movesToSloveGame=0;
+    playerScores=[0,0,0,0];
+    nextTurn=1;
+    singleSecondsCounter=0;
+    tensSecondsCounter=0;
+    minutesCounter=0;
+    if(dashboardSelections.playerNumbers===1){
+        resetTimer();
+        clearInterval(intervalId);
+        gameScore.querySelector(".moves p:nth-child(2)")!.textContent="0";
+    }
+    else{
+       const playersScore=gameScore.querySelectorAll("p:nth-child(2)");
+       const players=document.querySelectorAll(".multi >div");
+       players.forEach((ele,index)=>{
+            if(index===0){
+                if(!ele.classList.toString().includes("turn")){
+                    ele.classList.add("turn");
+                }
+            }
+            else{
+                ele.classList.remove("turn");
+            }
+       })
+       playersScore.forEach((ele)=>{
+            ele.textContent="0";
+       }) 
+    }
+
     if(dashboardSelections.playerNumbers===1){
         clearInterval(intervalId);
     }
@@ -550,12 +586,5 @@ function newGame(){
     gameBoard.classList.add("d-none");
     dashboardMenu.classList.remove("d-none");
 }
-function closePopUps(...buttons:{"buttonElement":Element,"parentElement":Element}[]){
-        buttons.forEach((ele)=>{
-            ele.buttonElement.addEventListener("click",()=>{
-                ele.parentElement.classList.remove("d-block");
-                ele.parentElement.classList.add("d-none");
-            })
-        })
-}
+
 // setRandomPositions(dashboardSelections);
