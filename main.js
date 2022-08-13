@@ -118,6 +118,8 @@ submitDashboard.addEventListener("click", function () {
                         if (solvedChoice.length === Math.pow(dashboardSelections.gridSize, 2)) {
                             if (dashboardSelections.playerNumbers > 1) {
                                 var scoreDetails = document.querySelectorAll(".scoreDetails");
+                                var playerNumbers = playerScores.slice(0, dashboardSelections.playerNumbers);
+                                var MaxScore_1 = Math.max.apply(Math, playerScores);
                                 scoreDetails.forEach(function (ele, index) {
                                     if (index < 2) {
                                         ele.classList.add("d-none");
@@ -126,20 +128,17 @@ submitDashboard.addEventListener("click", function () {
                                         ele.classList.remove("d-none");
                                         var playerScoreIndex = index - 2;
                                         var playerScore = playerScores[playerScoreIndex];
-                                        var MaxScore = Math.max.apply(Math, playerScores);
-                                        if (playerScore === MaxScore) {
+                                        ele.children[1].querySelector(".score").textContent = playerScores[playerScoreIndex] + "";
+                                        if (playerScore === MaxScore_1) {
                                             ele.classList.add("winner");
-                                        }
-                                        var checkTie = new Set(playerScores);
-                                        if ((checkTie.size !== playerScores.length) && (!checkTie.has(MaxScore))) {
-                                            document.querySelector(".winMessage").textContent = "It’s a tie!";
-                                        }
-                                        else {
                                             document.querySelector(".winMessage").textContent = "Player ".concat(playerScoreIndex + 1, " Wins!");
                                         }
-                                        ele.children[1].querySelector(".score").textContent = playerScores[playerScoreIndex] + "";
                                     }
                                 });
+                                if (document.querySelectorAll(".winner").length > 1) {
+                                    document.querySelector(".winMessage").textContent = "It’s a tie!";
+                                }
+                                gameStatusModal.classList.remove("d-none");
                                 gameStatusModal.classList.add("show", "d-block");
                             }
                             else {
@@ -156,6 +155,7 @@ submitDashboard.addEventListener("click", function () {
                                 });
                                 document.querySelector(".scoreDetails:first-child  .score +span").textContent = elapsedTime_1;
                                 document.querySelector(".scoreDetails:nth-child(2) .score +span").textContent = movesToSloveGame + '';
+                                gameStatusModal.classList.remove("d-none");
                                 gameStatusModal.classList.add("show", "d-block");
                             }
                         }
@@ -400,6 +400,11 @@ function restart() {
     singleSecondsCounter = 0;
     tensSecondsCounter = 0;
     minutesCounter = 0;
+    if (document.querySelectorAll(".winner").length !== 0) {
+        document.querySelectorAll(".winner").forEach(function (ele) {
+            ele.classList.remove("winner");
+        });
+    }
     var choices = document.querySelectorAll(".choice");
     choices.forEach(function (ele) {
         ele.classList.remove("solved", "selected");
@@ -437,6 +442,9 @@ function newGame() {
     singleSecondsCounter = 0;
     tensSecondsCounter = 0;
     minutesCounter = 0;
+    document.querySelectorAll(".scoreDetails").forEach(function (ele) {
+        ele.setAttribute("class", "scoreDetails d-none");
+    });
     if (dashboardSelections.playerNumbers === 1) {
         resetTimer();
         clearInterval(intervalId);

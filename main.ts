@@ -172,6 +172,10 @@ submitDashboard.addEventListener("click",()=>{
                             if(solvedChoice.length===dashboardSelections.gridSize**2){
                                 if(dashboardSelections.playerNumbers>1){
                                     let scoreDetails=document.querySelectorAll(".scoreDetails");
+                                    const playerNumbers=playerScores.slice(0,dashboardSelections.playerNumbers);
+                                    const MaxScore=Math.max(...playerScores);
+                     
+                                    
                                     scoreDetails.forEach((ele,index)=>{
                                         if(index<2){
                                             ele.classList.add("d-none")
@@ -180,23 +184,21 @@ submitDashboard.addEventListener("click",()=>{
                                             ele.classList.remove("d-none")
                                             const playerScoreIndex=index-2;
                                             const playerScore=playerScores[playerScoreIndex];
-                                            const MaxScore=Math.max(...playerScores);
                                  
+                                            ele.children[1].querySelector(".score")!.textContent=playerScores[playerScoreIndex]+"";
                                             if(playerScore===MaxScore){
                                                 ele.classList.add("winner")
-                                            }
-                                            const checkTie=new Set(playerScores);
-                                            if((checkTie.size!==playerScores.length) &&   (!checkTie.has(MaxScore))){
-                                                document.querySelector(".winMessage")!.textContent="It’s a tie!";
-                                            }
-                                            else{
                                                 document.querySelector(".winMessage")!.textContent=`Player ${playerScoreIndex+1} Wins!`;
+                                                
                                             }
-                                            ele.children[1].querySelector(".score")!.textContent=playerScores[playerScoreIndex]+"";
-                          
+  
+                                            
                                         }
                                     })
-
+                                    if(document.querySelectorAll(".winner").length>1){
+                                        document.querySelector(".winMessage")!.textContent="It’s a tie!";
+                                    }
+                                    gameStatusModal.classList.remove("d-none")
                                     gameStatusModal.classList.add("show","d-block")
                                 }
                                 else{
@@ -213,6 +215,7 @@ submitDashboard.addEventListener("click",()=>{
                                     })
                                     document.querySelector(".scoreDetails:first-child  .score +span")!.textContent=elapsedTime;
                                     document.querySelector(".scoreDetails:nth-child(2) .score +span")!.textContent=movesToSloveGame+'';
+                                    gameStatusModal.classList.remove("d-none");
                                     gameStatusModal.classList.add("show","d-block");
                                 }
                               
@@ -495,6 +498,11 @@ function restart(){
     singleSecondsCounter=0;
     tensSecondsCounter=0;
     minutesCounter=0;
+    if(document.querySelectorAll(".winner").length!==0){
+        document.querySelectorAll(".winner").forEach((ele)=>{
+            ele.classList.remove("winner");
+        })
+    }
     const choices=document.querySelectorAll(".choice");
     choices.forEach((ele)=>{
         ele.classList.remove("solved","selected");
@@ -538,6 +546,9 @@ function newGame(){
     singleSecondsCounter=0;
     tensSecondsCounter=0;
     minutesCounter=0;
+    document.querySelectorAll(".scoreDetails").forEach((ele)=>{
+        ele.setAttribute("class","scoreDetails d-none");
+    })
     if(dashboardSelections.playerNumbers===1){
         resetTimer();
         clearInterval(intervalId);
