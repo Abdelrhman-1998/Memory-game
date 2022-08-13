@@ -546,6 +546,7 @@ function newGame(){
     singleSecondsCounter=0;
     tensSecondsCounter=0;
     minutesCounter=0;
+    document.querySelector(".winMessage")!.textContent="You did it!";
     document.querySelectorAll(".scoreDetails").forEach((ele)=>{
         ele.setAttribute("class","scoreDetails d-none");
     })
