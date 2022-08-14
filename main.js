@@ -58,6 +58,7 @@ selectionButtons.forEach(function (ele) {
     });
 });
 submitDashboard.addEventListener("click", function () {
+    document.querySelector("main").classList.add("gameBoardMain");
     setGridSystem(gridContainer, dashboardSelections);
     fillGridSystem(dashboardSelections);
     var choices = document.querySelectorAll(".choice");
@@ -442,6 +443,7 @@ function newGame() {
     singleSecondsCounter = 0;
     tensSecondsCounter = 0;
     minutesCounter = 0;
+    document.querySelector("main").classList.remove("gameBoardMain");
     document.querySelector(".winMessage").textContent = "You did it!";
     document.querySelectorAll(".scoreDetails").forEach(function (ele) {
         ele.setAttribute("class", "scoreDetails d-none");

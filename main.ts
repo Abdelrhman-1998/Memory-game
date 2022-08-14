@@ -106,6 +106,7 @@ selectionButtons.forEach((ele)=>{
  
 })
 submitDashboard.addEventListener("click",()=>{
+    document.querySelector("main")!.classList.add("gameBoardMain");
     setGridSystem(gridContainer,dashboardSelections);
     fillGridSystem(dashboardSelections);
     const choices=document.querySelectorAll(".choice");
@@ -546,6 +547,7 @@ function newGame(){
     singleSecondsCounter=0;
     tensSecondsCounter=0;
     minutesCounter=0;
+    document.querySelector("main")!.classList.remove("gameBoardMain");
     document.querySelector(".winMessage")!.textContent="You did it!";
     document.querySelectorAll(".scoreDetails").forEach((ele)=>{
         ele.setAttribute("class","scoreDetails d-none");

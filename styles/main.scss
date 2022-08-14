@@ -24,6 +24,17 @@ body{
     margin: 0px;
     font-family: $fontFamily;
 }
+main{
+    width: 100%;
+    margin: 0 24px;
+    max-width: 654px;
+    &.gameBoardMain{
+        max-width: 1110px;
+        margin: 24px;
+        height: inherit;
+    }
+}
+
 button{
     outline: none;
     border: none;

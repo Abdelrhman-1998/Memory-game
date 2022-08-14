@@ -1,9 +1,9 @@
 @use "./_designVariables" as *;
 .startGame{
     color:  $gameBoardBackground ;
-    width:100%;
-    max-width:654px;
-    margin: 0 24px;
+    // width:100%;
+    // max-width:654px;
+    // margin: 0 24px;
     user-select: none;
 
     .gameTitle{

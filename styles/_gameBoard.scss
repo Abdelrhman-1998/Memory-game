@@ -116,9 +116,9 @@ $dimensions:4,6; // grid dimension
 .gameBoard{
     $media:"mobile";
     $playingMode:"solo";
-    max-width: 1110px;
+    // max-width: 1110px;
     height: calc(100% - 48px);
-    width: 100%;
+    // width: 100%;
     margin:24px;
     align-items: center;
     justify-content: space-between;

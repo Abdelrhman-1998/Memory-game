@@ -1,8 +1,5 @@
 .startGame {
   color: #FCFCFC;
-  width: 100%;
-  max-width: 654px;
-  margin: 0 24px;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -82,9 +79,7 @@
 }
 
 .gameBoard {
-  max-width: 1110px;
   height: calc(100% - 48px);
-  width: 100%;
   margin: 24px;
   align-items: center;
   justify-content: space-between;
@@ -556,6 +551,17 @@ body {
   height: 100vh;
   margin: 0px;
   font-family: "Atkinson Hyperlegible", sans-serif;
+}
+
+main {
+  width: 100%;
+  margin: 0 24px;
+  max-width: 654px;
+}
+main.gameBoardMain {
+  max-width: 1110px;
+  margin: 24px;
+  height: inherit;
 }
 
 button {

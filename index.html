@@ -16,118 +16,127 @@
   <!-- End font  type  -->
   <title>Frontend Mentor | Memory game</title>
 </head>
-<body role="main">
+<body >
 
+  <main >
+    <!-- Start Game Menu -->
   
-  <!-- Start Game Menu -->
-
-    <div class="startGame" >
-
-        <h1 class="gameTitle">
-          memory
-        </h1>
-        <div class="startGameContainer">
-          <div class="themeMenu">
-            <h2>
-              Select Theme
-            </h2>
-            <div class="buttonsContainer">
-              <button class="active">
-                Numbers
-              </button>
-              <button class="idle">
-                Icons
-              </button>
-            </div>
-          </div>
-  
-          <div class="playersNumbers">
-              <h2>
-                Numbers of Players
-              </h2>
-              <div class="buttonsContainer">
-                <button class="active">
-                    1
-                </button>
-                <button class="idle">
-                    2
-                </button>
-                <button class="idle">
-                    3
-                </button>
-                <button class="idle">
-                    4
-                </button>
-              </div>
-          </div>
-  
-          <div class="gridSize">
-              <h2>
-                Grid Size
-              </h2>
-              <div class="buttonsContainer">
-                <button class="active">
-                  4x4
-                </button>
-                <button class="idle">
-                  6x6
-                </button>
-              </div>
-          </div>
-         
-          <div class="submitDashboard">
-            <button class="primary">
-              Start Game
-            </button>
-          </div>
-        </div>
-
-    </div>
-
-  <!-- Strat Game Menu-->
+      <div class="startGame" >
     
-  <!-- Game Board -->
-
-      <div class="gameBoard d-none ">
-        <div class="gameBoardHeader">
-            <div class="logo">
-                memory
+          <h1 class="gameTitle">
+            memory
+          </h1>
+          <div class="startGameContainer">
+            <div class="themeMenu">
+              <h2>
+                Select Theme
+              </h2>
+              <div class="buttonsContainer">
+                <button class="active">
+                  Numbers
+                </button>
+                <button class="idle">
+                  Icons
+                </button>
+              </div>
             </div>
-            <div class="gameOptions">
-                <button class="primary restart">
-                  Restart
-                </button>
-                <button class="secondary newGame">
-                  New Game
-                </button>
-                <button class="primary" type="button">
-                  Menu
-                </button>
+    
+            <div class="playersNumbers">
+                <h2>
+                  Numbers of Players
+                </h2>
+                <div class="buttonsContainer">
+                  <button class="active">
+                      1
+                  </button>
+                  <button class="idle">
+                      2
+                  </button>
+                  <button class="idle">
+                      3
+                  </button>
+                  <button class="idle">
+                      4
+                  </button>
+                </div>
             </div>
-        </div>
-        <div class="gridContainer">
-          <!-- replace grid-6x6 with grid-4x4 -->
-          <!-- <div class="choice selected"><span>32</span></div>
-          <div class="choice solved"><i class="fa-solid fa-anchor"></i></div> -->
-
-        </div>
-        <div class="gameScore">
-            <div class="solo t-50 d-45"> 
-              <!-- replace multi with solo -->
-                  <div class="time">
-                    <!-- replace player1 with time -->
-                    <p>
-                      
-                    </p>
-                    <p >
-                        <span class="minutes">0</span>
-                        <span class="colon">:</span>
-                        <span class="seconds">00</span>
-                        <span class="">0</span>
-                    </p>
-                  </div>
-                  <div class="moves">
-                    <!-- replace player2 with moves -->
+    
+            <div class="gridSize">
+                <h2>
+                  Grid Size
+                </h2>
+                <div class="buttonsContainer">
+                  <button class="active">
+                    4x4
+                  </button>
+                  <button class="idle">
+                    6x6
+                  </button>
+                </div>
+            </div>
+           
+            <div class="submitDashboard">
+              <button class="primary">
+                Start Game
+              </button>
+            </div>
+          </div>
+    
+      </div>
+    
+      <!-- Strat Game Menu-->
+      
+  
+      <!-- Game Board -->
+        <div class="gameBoard d-none ">
+          <div class="gameBoardHeader">
+              <div class="logo">
+                  memory
+              </div>
+              <div class="gameOptions">
+                  <button class="primary restart">
+                    Restart
+                  </button>
+                  <button class="secondary newGame">
+                    New Game
+                  </button>
+                  <button class="primary" type="button">
+                    Menu
+                  </button>
+              </div>
+          </div>
+          <div class="gridContainer">
+            <!-- replace grid-6x6 with grid-4x4 -->
+            <!-- <div class="choice selected"><span>32</span></div>
+            <div class="choice solved"><i class="fa-solid fa-anchor"></i></div> -->
+    
+          </div>
+          <div class="gameScore">
+              <div class="solo t-50 d-45"> 
+                <!-- replace multi with solo -->
+                    <div class="time">
+                      <!-- replace player1 with time -->
+                      <p>
+                        
+                      </p>
+                      <p >
+                          <span class="minutes">0</span>
+                          <span class="colon">:</span>
+                          <span class="seconds">00</span>
+                          <span class="">0</span>
+                      </p>
+                    </div>
+                    <div class="moves">
+                      <!-- replace player2 with moves -->
+                        <p>
+                     
+                        </p>
+                        <p >
+                            0
+                        </p>
+                    </div>
+                    <div class="player3 d-none ">
+                      <!-- display none in solo -->
                       <p>
                    
                       </p>
@@ -135,7 +144,7 @@
                           0
                       </p>
                   </div>
-                  <div class="player3 d-none ">
+                  <div class="player4 d-none ">
                     <!-- display none in solo -->
                     <p>
                  
@@ -144,22 +153,18 @@
                         0
                     </p>
                 </div>
-                <div class="player4 d-none ">
-                  <!-- display none in solo -->
-                  <p>
-               
-                  </p>
-                  <p >
-                      0
-                  </p>
+      
               </div>
+          </div>
     
-            </div>
         </div>
+        
+      <!-- Game Board -->
 
-      </div>
+  </main>
 
-  <!-- Game Board -->
+  
+    
 
   <!-- Modals -->
 
