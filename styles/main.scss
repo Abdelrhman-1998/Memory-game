@@ -40,6 +40,9 @@ button{
 }
 .modal{
     user-select: none;
+    .modal-content{
+        border: unset;
+    }
     .modal-dialog{
      
             margin: 0 24px;

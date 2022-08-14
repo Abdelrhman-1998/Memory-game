@@ -52,13 +52,13 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
 }
-.startGame .startGameContainer h3 {
+.startGame .startGameContainer h2 {
   color: #7191A5;
   font-size: 15px;
   margin-bottom: 11px;
 }
 @media (min-width: 768px) {
-  .startGame .startGameContainer h3 {
+  .startGame .startGameContainer h2 {
     font-size: 20px;
   }
 }
@@ -580,6 +580,9 @@ button.active {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+}
+.modal .modal-content {
+  border: unset;
 }
 .modal .modal-dialog {
   margin: 0 24px;
