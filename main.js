@@ -1,55 +1,97 @@
-var dashboardMenu = document.querySelector(".startGame");
-var selectionButtons = document.querySelectorAll(".startGame .buttonsContainer button");
-var submitDashboard = document.querySelector(".startGame .startGameContainer .submitDashboard button");
-var gameBoard = document.querySelector(".gameBoard");
-var gridContainer = document.querySelector(".gameBoard .gridContainer");
-var gameScore = document.querySelector(".gameBoard .gameScore");
-var gameStatusModal = document.getElementById("gameStatus");
-var restartGameStatusBtn = gameStatusModal.querySelector(".restart");
-var choiceCard = document.createElement("div");
-var menuList = document.getElementById("menuList");
-var restartMenuList = menuList.querySelector(".restart");
-var menuButton = document.querySelector(".gameOptions button:last-child");
-var resumeButton = document.querySelector("#menuList .modal-body button:last-child");
-var newGameButtons = document.querySelectorAll(".newGame");
+import { Confettiful } from "./congratulation.js";
+const dashboardMenu = document.querySelector(".startGame");
+const selectionButtons = document.querySelectorAll(".startGame .buttonsContainer button");
+const submitDashboard = document.querySelector(".startGame .startGameContainer .submitDashboard button");
+const gameBoard = document.querySelector(".gameBoard");
+const gridContainer = document.querySelector(".gameBoard .gridContainer");
+const gameScore = document.querySelector(".gameBoard .gameScore");
+const gameStatusModal = document.getElementById("gameStatus");
+const restartGameStatusBtn = gameStatusModal.querySelector(".restart");
+const choiceCard = document.createElement("div");
+const menuList = document.getElementById("menuList");
+const restartMenuList = menuList.querySelector(".restart");
+const menuButton = document.querySelector(".gameOptions button:last-child");
+const resumeButton = document.querySelector("#menuList .modal-body button:last-child");
+const newGameButtons = document.querySelectorAll(".newGame");
+const showCongratulations = new Confettiful(gameStatusModal);
 choiceCard.classList.add("choice");
-var gameIcons = {
+const gameIcons = {
     "type": "fa-solid",
     "icons": [
         "fa-anchor", "fa-bug", "fa-flask", "fa-futbol", "fa-hand-spock",
         "fa-turkish-lira-sign", "fa-moon", "fa-snowflake", "fa-sun", "fa-car"
     ]
 };
-var restartButtons = document.querySelectorAll(".restart");
-var newGameMenuList = menuList.querySelector(".newGame");
-var newGameGameStatus = gameStatusModal.querySelector(".newGame");
-var soloModeHTMLTags = "\n<div class=\"time\">\n<!-- replace player1 with time -->\n<p>\n\n</p>\n<p >\n    <span class=\"minutes\">0</span>\n    <span class=\"colon\">:</span>\n    <span class=\"seconds\">00</span>\n    <span>0</span>\n</p>\n</div>\n<div class=\"moves\">\n<!-- replace player2 with moves -->\n  <p>\n\n  </p>\n  <p >\n      0\n  </p>\n</div>\n<div class=\"player3 d-none \">\n<!-- display none in solo -->\n<p>\n\n</p>\n<p >\n    0\n</p>\n</div>\n<div class=\"player4 d-none \">\n<!-- display none in solo -->\n<p>\n\n</p>\n<p >\n  0\n</p>\n</div>\n";
-var dashboardSelections = { "theme": "numbers", "playerNumbers": 1, "gridSize": 4 };
-var selectedPairs = [];
-var movesToSloveGame = 0;
-var playerScores = [0, 0, 0, 0];
-var nextTurn = 1;
-var singleSecondsCounter = 0;
-var tensSecondsCounter = 0;
-var minutesCounter = 0;
-var intervalId;
-selectionButtons.forEach(function (ele) {
-    ele.addEventListener("click", function () {
+const restartButtons = document.querySelectorAll(".restart");
+const newGameMenuList = menuList.querySelector(".newGame");
+const newGameGameStatus = gameStatusModal.querySelector(".newGame");
+const soloModeHTMLTags = `
+<div class="time">
+<!-- replace player1 with time -->
+<p>
+
+</p>
+<p >
+    <span class="minutes">0</span>
+    <span class="colon">:</span>
+    <span class="seconds">00</span>
+    <span>0</span>
+</p>
+</div>
+<div class="moves">
+<!-- replace player2 with moves -->
+  <p>
+
+  </p>
+  <p >
+      0
+  </p>
+</div>
+<div class="player3 d-none ">
+<!-- display none in solo -->
+<p>
+
+</p>
+<p >
+    0
+</p>
+</div>
+<div class="player4 d-none ">
+<!-- display none in solo -->
+<p>
+
+</p>
+<p >
+  0
+</p>
+</div>
+`;
+let dashboardSelections = { "theme": "numbers", "playerNumbers": 1, "gridSize": 4 };
+let selectedPairs = [];
+let movesToSloveGame = 0;
+let playerScores = [0, 0, 0, 0];
+let nextTurn = 1;
+let singleSecondsCounter = 0;
+let tensSecondsCounter = 0;
+let minutesCounter = 0;
+let intervalId;
+selectionButtons.forEach((ele) => {
+    ele.addEventListener("click", () => {
         if (!ele.classList.contains("active")) {
-            ele.parentElement.querySelectorAll("button").forEach(function (ele) {
+            ele.parentElement.querySelectorAll("button").forEach((ele) => {
                 ele.classList.replace("active", "idle");
             });
             ele.classList.replace("idle", "active");
             if (ele.parentElement.parentElement.classList.contains("themeMenu")) {
-                var themeMenu = ele.innerHTML.trim().toLowerCase();
+                const themeMenu = ele.innerHTML.trim().toLowerCase();
                 dashboardSelections.theme = themeMenu;
             }
             else if (ele.parentElement.parentElement.classList.contains("playersNumbers")) {
-                var playersNumbers = ele.innerHTML.trim();
+                const playersNumbers = ele.innerHTML.trim();
                 dashboardSelections.playerNumbers = +playersNumbers;
             }
             else if (ele.parentElement.parentElement.classList.contains("gridSize")) {
-                var gridSize = ele.innerHTML.trim();
+                const gridSize = ele.innerHTML.trim();
                 ;
                 gridSize.includes("4") ? dashboardSelections.gridSize = 4 : dashboardSelections.gridSize = 6;
             }
@@ -57,13 +99,13 @@ selectionButtons.forEach(function (ele) {
         }
     });
 });
-submitDashboard.addEventListener("click", function () {
+submitDashboard.addEventListener("click", () => {
     document.querySelector("main").classList.add("gameBoardMain");
     setGridSystem(gridContainer, dashboardSelections);
     fillGridSystem(dashboardSelections);
-    var choices = document.querySelectorAll(".choice");
-    choices.forEach(function (ele) {
-        ele.addEventListener("click", function () {
+    const choices = document.querySelectorAll(".choice");
+    choices.forEach((ele) => {
+        ele.addEventListener("click", () => {
             if ((!ele.classList.toString().includes("selected")) && (!ele.classList.toString().includes("solved"))) {
                 ele.classList.add("selected");
                 selectedPairs.push(ele);
@@ -82,18 +124,18 @@ submitDashboard.addEventListener("click", function () {
                 }
                 stopPointerEvent(choices);
                 if ((selectedPairs[0].children[0].classList.toString() === selectedPairs[1].children[0].classList.toString()) && (selectedPairs[0].children[0].textContent === selectedPairs[1].children[0].textContent)) {
-                    var currentPlayerTurn_1 = nextTurn - 1;
-                    var oldPlayerScore = void 0;
-                    if (currentPlayerTurn_1 === 0) {
+                    let currentPlayerTurn = nextTurn - 1;
+                    let oldPlayerScore;
+                    if (currentPlayerTurn === 0) {
                         oldPlayerScore = playerScores[dashboardSelections.playerNumbers - 1];
                         playerScores[dashboardSelections.playerNumbers - 1] = ++oldPlayerScore;
                     }
                     else {
-                        oldPlayerScore = playerScores[currentPlayerTurn_1 - 1];
-                        playerScores[currentPlayerTurn_1 - 1] = ++oldPlayerScore;
+                        oldPlayerScore = playerScores[currentPlayerTurn - 1];
+                        playerScores[currentPlayerTurn - 1] = ++oldPlayerScore;
                     }
-                    setTimeout(function () {
-                        selectedPairs.forEach(function (ele) {
+                    setTimeout(() => {
+                        selectedPairs.forEach((ele) => {
                             ele.classList.replace("selected", "solved");
                             selectedPairs = [];
                             if (dashboardSelections.playerNumbers === 1) {
@@ -101,38 +143,38 @@ submitDashboard.addEventListener("click", function () {
                             }
                             else {
                                 //   gameScore.querySelector(`.player${nextTurn-1}.turn`)!.children[1]!.textContent=score+"";
-                                if (currentPlayerTurn_1 === 0) {
-                                    gameScore.querySelector(".player".concat(dashboardSelections.playerNumbers)).children[1].textContent = playerScores[dashboardSelections.playerNumbers - 1] + "";
-                                    gameScore.querySelector(".player".concat(dashboardSelections.playerNumbers)).classList.remove("turn");
+                                if (currentPlayerTurn === 0) {
+                                    gameScore.querySelector(`.player${dashboardSelections.playerNumbers}`).children[1].textContent = playerScores[dashboardSelections.playerNumbers - 1] + "";
+                                    gameScore.querySelector(`.player${dashboardSelections.playerNumbers}`).classList.remove("turn");
                                 }
                                 else {
-                                    gameScore.querySelector(".player".concat(currentPlayerTurn_1)).children[1].textContent = playerScores[currentPlayerTurn_1 - 1] + "";
-                                    gameScore.querySelector(".player".concat(currentPlayerTurn_1)).classList.remove("turn");
+                                    gameScore.querySelector(`.player${currentPlayerTurn}`).children[1].textContent = playerScores[currentPlayerTurn - 1] + "";
+                                    gameScore.querySelector(`.player${currentPlayerTurn}`).classList.remove("turn");
                                 }
-                                gameScore.querySelector(".player".concat(nextTurn)).classList.add("turn");
+                                gameScore.querySelector(`.player${nextTurn}`).classList.add("turn");
                             }
                         });
                     }, 800);
                     // showResults
-                    setTimeout(function () {
-                        var solvedChoice = document.querySelectorAll(".choice.solved");
-                        if (solvedChoice.length === Math.pow(dashboardSelections.gridSize, 2)) {
+                    setTimeout(() => {
+                        let solvedChoice = document.querySelectorAll(".choice.solved");
+                        if (solvedChoice.length === dashboardSelections.gridSize ** 2) {
                             if (dashboardSelections.playerNumbers > 1) {
-                                var scoreDetails = document.querySelectorAll(".scoreDetails");
-                                var playerNumbers = playerScores.slice(0, dashboardSelections.playerNumbers);
-                                var MaxScore_1 = Math.max.apply(Math, playerScores);
-                                scoreDetails.forEach(function (ele, index) {
+                                let scoreDetails = document.querySelectorAll(".scoreDetails");
+                                const playerNumbers = playerScores.slice(0, dashboardSelections.playerNumbers);
+                                const MaxScore = Math.max(...playerScores);
+                                scoreDetails.forEach((ele, index) => {
                                     if (index < 2) {
                                         ele.classList.add("d-none");
                                     }
                                     else if (index < dashboardSelections.playerNumbers + 2) {
                                         ele.classList.remove("d-none");
-                                        var playerScoreIndex = index - 2;
-                                        var playerScore = playerScores[playerScoreIndex];
+                                        const playerScoreIndex = index - 2;
+                                        const playerScore = playerScores[playerScoreIndex];
                                         ele.children[1].querySelector(".score").textContent = playerScores[playerScoreIndex] + "";
-                                        if (playerScore === MaxScore_1) {
+                                        if (playerScore === MaxScore) {
                                             ele.classList.add("winner");
-                                            document.querySelector(".winMessage").textContent = "Player ".concat(playerScoreIndex + 1, " Wins!");
+                                            document.querySelector(".winMessage").textContent = `Player ${playerScoreIndex + 1} Wins!`;
                                         }
                                     }
                                 });
@@ -141,31 +183,33 @@ submitDashboard.addEventListener("click", function () {
                                 }
                                 gameStatusModal.classList.remove("d-none");
                                 gameStatusModal.classList.add("show", "d-block");
+                                showCongratulations._renderConfetti();
                             }
                             else {
                                 clearInterval(intervalId);
-                                document.querySelectorAll(".scoreDetails").forEach(function (ele, index) {
+                                document.querySelectorAll(".scoreDetails").forEach((ele, index) => {
                                     if (index < 2) {
                                         ele.classList.remove("d-none");
                                     }
                                 });
-                                var timeSpans = document.querySelectorAll(".time span:not(:last-child)");
-                                var elapsedTime_1 = "";
-                                timeSpans.forEach(function (ele) {
-                                    elapsedTime_1 = elapsedTime_1 + ele.textContent.trim();
+                                let timeSpans = document.querySelectorAll(".time span:not(:last-child)");
+                                let elapsedTime = "";
+                                timeSpans.forEach((ele) => {
+                                    elapsedTime = elapsedTime + ele.textContent.trim();
                                 });
-                                document.querySelector(".scoreDetails:first-child  .score +span").textContent = elapsedTime_1;
+                                document.querySelector(".scoreDetails:first-child  .score +span").textContent = elapsedTime;
                                 document.querySelector(".scoreDetails:nth-child(2) .score +span").textContent = movesToSloveGame + '';
                                 gameStatusModal.classList.remove("d-none");
                                 gameStatusModal.classList.add("show", "d-block");
+                                showCongratulations._renderConfetti();
                             }
                         }
                     }, 800);
                 }
                 else {
                     // console.log(selectedPairs)
-                    setTimeout(function () {
-                        selectedPairs.forEach(function (ele) {
+                    setTimeout(() => {
+                        selectedPairs.forEach((ele) => {
                             ele.classList.remove("selected");
                             ele.children[0].classList.add("d-none");
                             selectedPairs = [];
@@ -192,40 +236,40 @@ submitDashboard.addEventListener("click", function () {
 });
 menuButton.addEventListener(("click"), onClickMenu);
 resumeButton.addEventListener("click", onClickResume);
-restartButtons.forEach(function (ele) {
+restartButtons.forEach((ele) => {
     ele.addEventListener("click", restart);
 });
-newGameButtons.forEach(function (ele) {
+newGameButtons.forEach((ele) => {
     ele.addEventListener("click", newGame);
 });
-restartMenuList.addEventListener("click", function () {
+restartMenuList.addEventListener("click", () => {
     menuList.classList.remove("d-block");
     menuList.classList.add("d-none");
 });
-restartGameStatusBtn.addEventListener("click", function () {
+restartGameStatusBtn.addEventListener("click", () => {
     gameStatusModal.classList.remove("d-block", "show");
     gameStatusModal.classList.add("d-none");
 });
-newGameMenuList.addEventListener("click", function () {
+newGameMenuList.addEventListener("click", () => {
     menuList.classList.remove("d-block", "show");
     menuList.classList.add("d-none");
 });
-newGameGameStatus.addEventListener("click", function () {
+newGameGameStatus.addEventListener("click", () => {
     gameStatusModal.classList.remove("d-block", "show");
     gameStatusModal.classList.add("d-none");
 });
 function setGridSystem(gridContainer, dashboardSelections) {
-    gridContainer.classList.add(dashboardSelections.theme, "grid-".concat(dashboardSelections.gridSize, "x").concat(dashboardSelections.gridSize));
-    for (var i = 0; i < dashboardSelections.gridSize * dashboardSelections.gridSize; ++i) {
-        var choice = choiceCard.cloneNode(true);
+    gridContainer.classList.add(dashboardSelections.theme, `grid-${dashboardSelections.gridSize}x${dashboardSelections.gridSize}`);
+    for (let i = 0; i < dashboardSelections.gridSize * dashboardSelections.gridSize; ++i) {
+        const choice = choiceCard.cloneNode(true);
         if (dashboardSelections.theme === "icons") {
-            var icon = document.createElement("i");
-            icon.classList.add("".concat(gameIcons.type), "d-none");
+            const icon = document.createElement("i");
+            icon.classList.add(`${gameIcons.type}`, `d-none`);
             choice.appendChild(icon);
             gridContainer.append(choice);
         }
         else {
-            var span = document.createElement("span");
+            const span = document.createElement("span");
             span.classList.add("d-none");
             choice.appendChild(span);
             gridContainer.append(choice);
@@ -240,15 +284,15 @@ function showGameBoard() {
 function setPlayerNumbers(dashboardSelections) {
     if (dashboardSelections.playerNumbers > 1) {
         gameScore.children[0].classList.replace("solo", "multi");
-        var allPlayers = gameScore.children[0].children;
-        for (var i = 0; i < dashboardSelections.playerNumbers; i++) {
-            allPlayers[i].setAttribute("class", "player".concat(i + 1));
+        const allPlayers = gameScore.children[0].children;
+        for (let i = 0; i < dashboardSelections.playerNumbers; i++) {
+            allPlayers[i].setAttribute("class", `player${i + 1}`);
             if (i === 0) {
                 allPlayers[i].classList.add("turn");
-                allPlayers[i].classList.replace("time", "player".concat(i));
+                allPlayers[i].classList.replace("time", `player${i}`);
             }
         }
-        var hiddenElements = gameScore.children[0].querySelectorAll(".d-none");
+        const hiddenElements = gameScore.children[0].querySelectorAll(".d-none");
         // console.log(hiddenElements)
         if (allPlayers.length - hiddenElements.length > 2) {
             gameScore.children[0].classList.remove("d-45");
@@ -257,9 +301,9 @@ function setPlayerNumbers(dashboardSelections) {
     }
 }
 function randomSet(arrLength, range) {
-    var arr = [];
+    const arr = [];
     while (arr.length !== arrLength) {
-        var randomIndex = Math.floor(Math.random() * range);
+        const randomIndex = Math.floor(Math.random() * range);
         if (!arr.includes(randomIndex)) {
             arr.push(randomIndex);
         }
@@ -267,90 +311,90 @@ function randomSet(arrLength, range) {
     return arr;
 }
 function setRandomPositions(dashboardSelections) {
-    var choicesNumber = dashboardSelections.gridSize * dashboardSelections.gridSize;
-    var choicesIndices = [];
-    var randomIcons = [];
-    var range = choicesNumber / 2;
-    for (var i = 0; i < choicesNumber; i++) {
+    const choicesNumber = dashboardSelections.gridSize * dashboardSelections.gridSize;
+    const choicesIndices = [];
+    const randomIcons = [];
+    let range = choicesNumber / 2;
+    for (let i = 0; i < choicesNumber; i++) {
         choicesIndices.push(i);
     }
     if (choicesNumber / 2 > gameIcons.icons.length) {
-        var counter = Math.ceil((choicesNumber / 2) / gameIcons.icons.length);
+        let counter = Math.ceil((choicesNumber / 2) / gameIcons.icons.length);
         // console.log(counter)
         range = (choicesNumber / 2) / counter;
-        for (var i = 0; i < counter; i++) {
-            var randomIconsIndices = randomSet(range, gameIcons.icons.length);
-            randomIconsIndices.forEach(function (ele) {
+        for (let i = 0; i < counter; i++) {
+            const randomIconsIndices = randomSet(range, gameIcons.icons.length);
+            randomIconsIndices.forEach((ele) => {
                 randomIcons.push(gameIcons.icons[ele]);
             });
         }
     }
     else {
-        var randomIconsIndices = randomSet(range, gameIcons.icons.length);
-        randomIconsIndices.forEach(function (ele) {
+        const randomIconsIndices = randomSet(range, gameIcons.icons.length);
+        randomIconsIndices.forEach((ele) => {
             randomIcons.push(gameIcons.icons[ele]);
         });
     }
-    var quesionsIndices = randomSet(choicesNumber / 2, choicesNumber);
-    var answerIndices = choicesIndices.filter(function (ele) {
+    const quesionsIndices = randomSet(choicesNumber / 2, choicesNumber);
+    const answerIndices = choicesIndices.filter((ele) => {
         return !quesionsIndices.includes(ele);
     });
-    var randomNumbers = quesionsIndices.map(function (ele) {
+    const randomNumbers = quesionsIndices.map((ele) => {
         return ele + 1 + "";
     });
     // console.log(setIconsOrNumbers(dashboardSelections,quesionsIndices,answerIndices,randomIcons,randomNumbers))
     return setIconsOrNumbers(dashboardSelections, quesionsIndices, answerIndices, randomIcons, randomNumbers);
 }
 function setIconsOrNumbers(dashboardSelections, quesionsIndices, answerIndices, randomIcons, randomNumbers) {
-    var resultArray = [];
-    var randomElement;
+    const resultArray = [];
+    let randomElement;
     if (dashboardSelections.theme === "icons") {
         randomElement = randomIcons;
     }
     else if (dashboardSelections.theme === "numbers") {
         randomElement = randomNumbers;
     }
-    quesionsIndices.forEach(function (ele, index) {
-        var resultObj = { "index": ele, "theme": randomElement[index] };
+    quesionsIndices.forEach((ele, index) => {
+        let resultObj = { "index": ele, "theme": randomElement[index] };
         resultArray.push(resultObj);
     });
-    answerIndices.forEach(function (ele, index) {
-        var resultObj = { "index": ele, "theme": randomElement[index] };
+    answerIndices.forEach((ele, index) => {
+        let resultObj = { "index": ele, "theme": randomElement[index] };
         resultArray.push(resultObj);
     });
     return resultArray;
 }
 function fillGridSystem(dashboardSelections) {
-    var allChoices = gridContainer.querySelectorAll(".choice");
-    var randomFill = setRandomPositions(dashboardSelections);
+    const allChoices = gridContainer.querySelectorAll(".choice");
+    const randomFill = setRandomPositions(dashboardSelections);
     if (dashboardSelections.theme === "icons") {
-        randomFill.forEach(function (ele) {
-            var icon = allChoices[ele.index].querySelector("i");
+        randomFill.forEach((ele) => {
+            const icon = allChoices[ele.index].querySelector("i");
             //    icon!.classList.add(ele.theme);
-            icon.setAttribute("class", "".concat(ele.theme, " ").concat(gameIcons.type, " d-none"));
+            icon.setAttribute("class", `${ele.theme} ${gameIcons.type} d-none`);
         });
     }
     else {
-        randomFill.forEach(function (ele) {
-            var span = allChoices[ele.index].querySelector("span");
+        randomFill.forEach((ele) => {
+            const span = allChoices[ele.index].querySelector("span");
             span.classList.add("d-none");
             span.innerText = ele.theme;
         });
     }
 }
 function stopPointerEvent(choices) {
-    choices.forEach(function (ele) {
+    choices.forEach((ele) => {
         ele.setAttribute("style", "pointer-events:none;");
         // console.log(ele)
     });
-    setTimeout(function () {
-        choices.forEach(function (ele) {
+    setTimeout(() => {
+        choices.forEach((ele) => {
             ele.removeAttribute("style");
         });
     }, 800);
 }
 function setTimer() {
-    var timer = setInterval(function () {
+    let timer = setInterval(() => {
         incrementTimer();
     }, 1000);
     return timer;
@@ -394,6 +438,7 @@ function onClickResume() {
     menuList.classList.add("d-none");
 }
 function restart() {
+    showCongratulations._stopAnimation();
     selectedPairs = [];
     movesToSloveGame = 0;
     playerScores = [0, 0, 0, 0];
@@ -402,12 +447,12 @@ function restart() {
     tensSecondsCounter = 0;
     minutesCounter = 0;
     if (document.querySelectorAll(".winner").length !== 0) {
-        document.querySelectorAll(".winner").forEach(function (ele) {
+        document.querySelectorAll(".winner").forEach((ele) => {
             ele.classList.remove("winner");
         });
     }
-    var choices = document.querySelectorAll(".choice");
-    choices.forEach(function (ele) {
+    const choices = document.querySelectorAll(".choice");
+    choices.forEach((ele) => {
         ele.classList.remove("solved", "selected");
     });
     fillGridSystem(dashboardSelections);
@@ -418,9 +463,9 @@ function restart() {
         gameScore.querySelector(".moves p:nth-child(2)").textContent = "0";
     }
     else {
-        var playersScore = gameScore.querySelectorAll("p:nth-child(2)");
-        var players = document.querySelectorAll(".multi >div");
-        players.forEach(function (ele, index) {
+        const playersScore = gameScore.querySelectorAll("p:nth-child(2)");
+        const players = document.querySelectorAll(".multi >div");
+        players.forEach((ele, index) => {
             if (index === 0) {
                 if (!ele.classList.toString().includes("turn")) {
                     ele.classList.add("turn");
@@ -430,12 +475,13 @@ function restart() {
                 ele.classList.remove("turn");
             }
         });
-        playersScore.forEach(function (ele) {
+        playersScore.forEach((ele) => {
             ele.textContent = "0";
         });
     }
 }
 function newGame() {
+    showCongratulations._stopAnimation();
     selectedPairs = [];
     movesToSloveGame = 0;
     playerScores = [0, 0, 0, 0];
@@ -445,7 +491,7 @@ function newGame() {
     minutesCounter = 0;
     document.querySelector("main").classList.remove("gameBoardMain");
     document.querySelector(".winMessage").textContent = "You did it!";
-    document.querySelectorAll(".scoreDetails").forEach(function (ele) {
+    document.querySelectorAll(".scoreDetails").forEach((ele) => {
         ele.setAttribute("class", "scoreDetails d-none");
     });
     if (dashboardSelections.playerNumbers === 1) {
@@ -454,9 +500,9 @@ function newGame() {
         gameScore.querySelector(".moves p:nth-child(2)").textContent = "0";
     }
     else {
-        var playersScore = gameScore.querySelectorAll("p:nth-child(2)");
-        var players = document.querySelectorAll(".multi >div");
-        players.forEach(function (ele, index) {
+        const playersScore = gameScore.querySelectorAll("p:nth-child(2)");
+        const players = document.querySelectorAll(".multi >div");
+        players.forEach((ele, index) => {
             if (index === 0) {
                 if (!ele.classList.toString().includes("turn")) {
                     ele.classList.add("turn");
@@ -466,7 +512,7 @@ function newGame() {
                 ele.classList.remove("turn");
             }
         });
-        playersScore.forEach(function (ele) {
+        playersScore.forEach((ele) => {
             ele.textContent = "0";
         });
     }
@@ -481,13 +527,13 @@ function newGame() {
     dashboardSelections = { "theme": "numbers", "playerNumbers": 1, "gridSize": 4 };
     gridContainer.classList.remove("grid-6x6");
     gridContainer.classList.remove("grid-4x4");
-    document.querySelectorAll(".choice").forEach(function (ele) {
+    document.querySelectorAll(".choice").forEach((ele) => {
         ele.remove();
     });
-    document.querySelectorAll(".startGameContainer .buttonsContainer button:first-child").forEach(function (ele, index) {
+    document.querySelectorAll(".startGameContainer .buttonsContainer button:first-child").forEach((ele, index) => {
         ele.setAttribute("class", "active");
     });
-    document.querySelectorAll(".startGameContainer .buttonsContainer button:not(:first-child)").forEach(function (ele, index) {
+    document.querySelectorAll(".startGameContainer .buttonsContainer button:not(:first-child)").forEach((ele, index) => {
         ele.setAttribute("class", "idle");
     });
     document.body.style.backgroundColor = "#152938";
@@ -495,3 +541,4 @@ function newGame() {
     dashboardMenu.classList.remove("d-none");
 }
 // setRandomPositions(dashboardSelections);
+//# sourceMappingURL=main.js.map

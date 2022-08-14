@@ -1,4 +1,5 @@
 
+import {Confettiful}  from "./congratulation.js";
 type dashBoardType ={"theme":string,"playerNumbers":number,"gridSize":number};
 type gameIconsType={"type":string,"icons":string[],"color"?:string};
 type resultObj={"index":number,"theme":string };
@@ -17,7 +18,7 @@ const restartMenuList=menuList.querySelector(".restart")!;
 const menuButton=document.querySelector(".gameOptions button:last-child")!;
 const resumeButton=document.querySelector("#menuList .modal-body button:last-child")!;
 const newGameButtons=document.querySelectorAll(".newGame")!;
-
+const showCongratulations=new Confettiful(gameStatusModal);
 choiceCard.classList.add("choice");
 const gameIcons:gameIconsType=
 {
@@ -200,7 +201,10 @@ submitDashboard.addEventListener("click",()=>{
                                         document.querySelector(".winMessage")!.textContent="It’s a tie!";
                                     }
                                     gameStatusModal.classList.remove("d-none")
+                                    
                                     gameStatusModal.classList.add("show","d-block")
+                                    showCongratulations._renderConfetti()
+                                 
                                 }
                                 else{
                                     clearInterval(intervalId);
@@ -218,6 +222,7 @@ submitDashboard.addEventListener("click",()=>{
                                     document.querySelector(".scoreDetails:nth-child(2) .score +span")!.textContent=movesToSloveGame+'';
                                     gameStatusModal.classList.remove("d-none");
                                     gameStatusModal.classList.add("show","d-block");
+                                    showCongratulations._renderConfetti()
                                 }
                               
                             }
@@ -492,6 +497,7 @@ function onClickResume(){
     
 }
 function restart(){
+    showCongratulations._stopAnimation();
     selectedPairs=[];  
     movesToSloveGame=0;
     playerScores=[0,0,0,0];
@@ -539,7 +545,7 @@ function restart(){
 }
 
 function newGame(){
-
+    showCongratulations._stopAnimation();
     selectedPairs=[];  
     movesToSloveGame=0;
     playerScores=[0,0,0,0];
@@ -599,6 +605,7 @@ function newGame(){
     document.body.style.backgroundColor="#152938";
     gameBoard.classList.add("d-none");
     dashboardMenu.classList.remove("d-none");
+   
 }
 
 // setRandomPositions(dashboardSelections);
