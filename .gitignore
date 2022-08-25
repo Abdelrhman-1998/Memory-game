@@ -15,6 +15,6 @@
 .DS_Store
 .prettierignore
 
-#ignore node modules
+#ignore
 node_modules
 fontawesome-free-6.1.2-web
